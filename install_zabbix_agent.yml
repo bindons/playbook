@@ -1,0 +1,11 @@
+- name: Transfer and execute zabbix_install_script.
+  hosts: all
+  tasks:
+    - name: install unixODBC
+      yum: name=unixODBC  state=installed
+
+    - name: Transfer the script
+      copy: src=zabbix_agent_install.sh dest=/tmp/ mode=0777
+
+    - name: Execute the script
+      command: sh /tmp/zabbix_agent_install.sh
