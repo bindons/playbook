@@ -1,0 +1,11 @@
+- hosts: all
+  remote_user: root
+  tasks:
+  - name: install tengine
+    synchronize: src=/home/ansible-work/source/Tengine-s/ dest=/data/opt
+  - name: modify env
+    shell: /bin/echo 'export PATH=$PATH:/data/opt/openssl/bin' >> /etc/profile && source /etc/profile
+  - name: build init.d-file
+    copy: src=/home/ansible-work/source/Tengine-s/nginx/nginx dest=/etc/init.d/nginx mode=755 owner=root
+  - name: server start
+    service: name=nginx enabled=true state=started
